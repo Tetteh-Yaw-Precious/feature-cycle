@@ -75,10 +75,20 @@ project) so you know what each field should look like.
 
 ## Companion skills (optional)
 
-The loop hands off to a few other skills when present — `feature-boilerplate` (epic + issues),
-`mermaid` (diagram syntax), `artifact-diagramming` (whether a diagram earns its place), and
-`code-review`. If you don't have them, the main loop still runs; it just can't delegate those
-specific steps.
+At a few steps the loop hands work to other skills instead of repeating them. These are separate,
+optional skills — none ship with this one. If a skill below is installed, the loop uses it; if not,
+the loop does that step itself with a built-in fallback, so nothing breaks. You do not need any of
+them to start.
+
+| Skill | What it is | Which step uses it | If you don't have it |
+|-------|-----------|--------------------|----------------------|
+| `feature-boilerplate` | Turns a large feature into a tracked milestone → epic → user-story issues. A personal skill, no public home; use any equivalent or do it by hand. | **Step 4 (Track it)** — only for large work (needs a migration, or spans multiple repos). | The loop opens the milestone, epic, and per-slice issues by hand. |
+| `code-review` | A structured code-review pass over your diff. [Claude Code ships one](https://docs.claude.com/en/docs/claude-code) as `/code-review`; other agents have their own. | **Step 8 (Review)** — after you've re-read your own diff. | The loop does a deliberate manual review pass instead. |
+| `mermaid` | Helper for writing correct [Mermaid](https://mermaid.js.org) diagram syntax. | **Step 10 (Document)** — when producing the architecture doc. | The loop writes the Mermaid diagrams itself. |
+| `artifact-diagramming` | Judgment on whether a given diagram earns its place. A personal skill, no public home. | **Step 10 (Document)** — deciding which diagrams to keep. | The loop cuts any diagram that doesn't answer a real question, using its own judgment. |
+
+So the loop runs fully standalone. Installing these just lets it delegate those four moments to a
+purpose-built skill rather than handling them inline.
 
 ## License
 
