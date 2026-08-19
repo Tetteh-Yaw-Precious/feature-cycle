@@ -1,10 +1,10 @@
 ---
-name: feature-cycle-generic
+name: feature-cycle
 description: |
-  The portable end-to-end loop for building a feature on any project: talk it out → question it → audit what already exists → track it on the issue tracker → build in isolation → verify against a proven baseline → prove it runs → document what is true → close the loop. Triggers whenever the user starts new feature work — "let's build X", "start on this feature", "here's what the client asked for", "work through the meeting actionables", "what's next", pastes a meeting transcript, or asks to pick up where the last cycle ended. Reads a per-project profile for the concrete facts (stakeholder, repos, seed accounts, DB, ports, branch base). If a project-specific feature-cycle skill already exists for this repo, prefer it. Optionally calls the feature-boilerplate, mermaid, artifact-diagramming and code-review skills if they are installed, rather than repeating them.
+  The portable end-to-end loop for building a feature on any project: talk it out → question it → audit what already exists → track it on the issue tracker → build in isolation → verify against a proven baseline → prove it runs → document what is true → close the loop. Triggers whenever the user starts new feature work — "let's build X", "start on this feature", "here's what the client asked for", "work through the meeting actionables", "what's next", pastes a meeting transcript, or asks to pick up where the last cycle ended. Reads a per-project profile for the concrete facts (stakeholder, repos, seed accounts, DB, ports, branch base). If a project-specific feature-cycle skill already exists for this repo, prefer it. Ships alongside the feature-boilerplate skill (used to scope large work into an epic), and optionally calls the mermaid, artifact-diagramming and code-review skills if they are installed, rather than repeating them.
 ---
 
-# Feature Cycle (portable)
+# Feature Cycle
 
 The loop for building a feature and never letting it go invisible. Each pass ends by surfacing what the next one starts from.
 

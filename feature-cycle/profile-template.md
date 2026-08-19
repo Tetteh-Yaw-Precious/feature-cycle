@@ -1,7 +1,7 @@
 # Feature-cycle profile — TEMPLATE
 
 Copy this to `.claude/feature-cycle-profile.md` in the project repo and fill every field.
-The `feature-cycle-generic` skill reads this for all project-specific facts. If a field is
+The `feature-cycle` skill reads this for all project-specific facts. If a field is
 unknown, ask the user — do not guess. A wrong seed account or base branch is worse than a blank.
 
 ---

@@ -1,4 +1,4 @@
-# feature-cycle-generic
+# feature-cycle
 
 > **In plain terms:** When someone builds a new piece of software with help from an AI assistant,
 > the work often slips through the cracks — it gets finished but never saved, done but never shared,
@@ -38,24 +38,33 @@ small per-project **profile** you fill in once. Same loop, any project.
 - The [`gh`](https://cli.github.com) GitHub CLI, if you want the issue-tracking steps to run against
   GitHub. Any other tracker works too — you just note it in your profile.
 
+## What's in this repo
+
+Two skills that work together:
+
+- **`feature-cycle`** — the main loop. This is the one that drives everything.
+- **`feature-boilerplate`** — scopes a large feature into a GitHub epic + user-story issues. The
+  `feature-cycle` loop hands off to it at step 4 for big work. Install both; they ship together.
+
 ## Install
 
-Copy the `feature-cycle-generic/` folder into your agent's skills directory:
+Copy both skill folders into your agent's skills directory:
 
 ```bash
 # Claude Code
-cp -R feature-cycle-generic ~/.claude/skills/
+cp -R feature-cycle feature-boilerplate ~/.claude/skills/
 
 # Codex / Gemini CLI (cross-runtime alias)
-cp -R feature-cycle-generic ~/.agents/skills/
+cp -R feature-cycle feature-boilerplate ~/.agents/skills/
 ```
 
-Or clone and symlink so you can `git pull` updates:
+Or clone and symlink both so you can `git pull` updates:
 
 ```bash
-git clone https://github.com/Tetteh-Yaw-Precious/feature-cycle-generic.git
-# the repo folder contains a skill folder of the same name — the doubled path is correct
-ln -s "$(pwd)/feature-cycle-generic/feature-cycle-generic" ~/.claude/skills/feature-cycle-generic
+git clone https://github.com/Tetteh-Yaw-Precious/feature-cycle.git
+# the repo folder holds two skill folders; symlink each into your skills dir
+ln -s "$(pwd)/feature-cycle/feature-cycle"        ~/.claude/skills/feature-cycle
+ln -s "$(pwd)/feature-cycle/feature-boilerplate"  ~/.claude/skills/feature-boilerplate
 ```
 
 ## Set up a project
@@ -63,32 +72,40 @@ ln -s "$(pwd)/feature-cycle-generic/feature-cycle-generic" ~/.claude/skills/feat
 The first time you run the skill in a repo, it will prompt you to create a profile. Do it by hand:
 
 ```bash
-cp feature-cycle-generic/profile-template.md .claude/feature-cycle-profile.md
+cp feature-cycle/profile-template.md .claude/feature-cycle-profile.md
 # then fill in every field with your project's facts
 ```
 
 The skill looks for `.claude/feature-cycle-profile.md` in the repo you're working in. If a field
 is blank it asks rather than guessing.
 
-See `feature-cycle-generic/profiles/example.md` for a fully filled-in profile (a fictional
-project) so you know what each field should look like.
+See `feature-cycle/profiles/example.md` for a fully filled-in profile (a fictional project) so you
+know what each field should look like.
 
-## Companion skills (optional)
+## Companion skills
 
-At a few steps the loop hands work to other skills instead of repeating them. These are separate,
-optional skills — none ship with this one. If a skill below is installed, the loop uses it; if not,
-the loop does that step itself with a built-in fallback, so nothing breaks. You do not need any of
-them to start.
+### Bundled — installs with this repo
+
+- **[`feature-boilerplate`](feature-boilerplate/SKILL.md)** — used at **step 4** to turn a large
+  feature (one that needs a migration, or spans multiple repos) into a tracked milestone → epic →
+  user-story issues written in plain, user-facing language. It's included in this repo, so if you
+  installed both folders above there's nothing extra to do. For small or medium work the loop just
+  opens a single issue and never calls it.
+
+### Optional — external, not included
+
+At three other steps the loop can hand work to a skill you may already have. If you don't, it does
+that step itself with a built-in fallback, so nothing breaks — you don't need any of these to start.
 
 | Skill | What it is | Which step uses it | If you don't have it |
 |-------|-----------|--------------------|----------------------|
-| `feature-boilerplate` | Turns a large feature into a tracked milestone → epic → user-story issues. A personal skill, no public home; use any equivalent or do it by hand. | **Step 4 (Track it)** — only for large work (needs a migration, or spans multiple repos). | The loop opens the milestone, epic, and per-slice issues by hand. |
 | `code-review` | A structured code-review pass over your diff. [Claude Code ships one](https://docs.claude.com/en/docs/claude-code) as `/code-review`; other agents have their own. | **Step 8 (Review)** — after you've re-read your own diff. | The loop does a deliberate manual review pass instead. |
 | `mermaid` | Helper for writing correct [Mermaid](https://mermaid.js.org) diagram syntax. | **Step 10 (Document)** — when producing the architecture doc. | The loop writes the Mermaid diagrams itself. |
 | `artifact-diagramming` | Judgment on whether a given diagram earns its place. A personal skill, no public home. | **Step 10 (Document)** — deciding which diagrams to keep. | The loop cuts any diagram that doesn't answer a real question, using its own judgment. |
 
-So the loop runs fully standalone. Installing these just lets it delegate those four moments to a
-purpose-built skill rather than handling them inline.
+So the loop runs fully standalone. The bundled `feature-boilerplate` covers the one heavy step;
+the three optional skills just let it delegate those moments to a purpose-built skill instead of
+handling them inline.
 
 ## License
 
