@@ -13,8 +13,8 @@ don't need to already know the tools to follow along.
 
 ## What am I looking at?
 
-This is a **skill for AI coding agents** like Claude Code, Codex, and Gemini CLI, the tools that
-write code alongside you. A skill is just a set of written instructions the agent reads and follows.
+This is a **skill for AI coding agents** like Claude Code, Cursor, Codex, and Gemini CLI, the tools
+that write code alongside you. A skill is just a set of written instructions the agent reads and follows.
 You don't run it like an app or type a command for it. You install it once, then work the way you
 normally would, and when you start building a new feature the agent notices and quietly follows the
 process described here.
@@ -100,7 +100,9 @@ the way a careful teammate would.
 
 ## Requirements
 
-- An AI coding agent that supports skills (Claude Code, Codex, or Gemini CLI).
+- An AI coding agent that supports the Agent Skills standard: Claude Code, Cursor (2.4+), Codex,
+  Gemini CLI, or GitHub Copilot CLI. They all read the same `SKILL.md` format, so one copy of this
+  skill works in any of them.
 - `git` on your machine.
 - The [`gh`](https://cli.github.com) GitHub CLI, if you want the issue-tracking steps to run against
   GitHub. Any other tracker works too — you just note it in your profile.
@@ -115,23 +117,57 @@ Two skills that work together:
 
 ## Install
 
-Copy both skill folders into your agent's skills directory:
+Every agent reads the same `SKILL.md` format; only the folder it looks in differs. So the steps are
+the same everywhere: get the two skill folders, then drop them in the right place for your agent.
 
-```bash
-# Claude Code
-cp -R feature-cycle feature-boilerplate ~/.claude/skills/
-
-# Codex / Gemini CLI (cross-runtime alias)
-cp -R feature-cycle feature-boilerplate ~/.agents/skills/
-```
-
-Or clone and symlink both so you can `git pull` updates:
+**Step 1 — get the files.** Clone the repo (or download it as a ZIP and unzip):
 
 ```bash
 git clone https://github.com/Tetteh-Yaw-Precious/feature-cycle.git
-# the repo folder holds two skill folders; symlink each into your skills dir
-ln -s "$(pwd)/feature-cycle/feature-cycle"        ~/.claude/skills/feature-cycle
-ln -s "$(pwd)/feature-cycle/feature-boilerplate"  ~/.claude/skills/feature-boilerplate
+cd feature-cycle
+```
+
+Inside are the two skill folders you'll install: `feature-cycle` and `feature-boilerplate`.
+
+**Step 2 — copy them where your agent looks.** Find your agent in the table:
+
+| Agent | Where skills live |
+|-------|-------------------|
+| Claude Code | `~/.claude/skills/` (your home folder, used by every project) |
+| Codex | `~/.agents/skills/` |
+| Gemini CLI | `~/.agents/skills/` |
+| GitHub Copilot CLI | `~/.agents/skills/` |
+| Cursor (2.4+) | `.cursor/skills/` **inside the project** you want to use them in |
+
+For every agent except Cursor, the folder lives in your home directory and works across all your
+projects. Run this from inside the cloned repo, changing `DEST` to match your agent:
+
+```bash
+DEST=~/.claude/skills      # Claude Code
+# DEST=~/.agents/skills    # Codex, Gemini CLI, or Copilot CLI
+
+mkdir -p "$DEST"
+cp -R feature-cycle feature-boilerplate "$DEST"/
+```
+
+For **Cursor**, skills are per-project, so copy them into the project you're working in. From the
+cloned repo, point at that project:
+
+```bash
+PROJECT=~/code/my-project          # the project you want the skill in
+mkdir -p "$PROJECT/.cursor/skills"
+cp -R feature-cycle feature-boilerplate "$PROJECT/.cursor/skills/"
+```
+
+That's it. Your agent will pick the skill up automatically the next time you start feature work.
+
+**Optional — stay up to date with `git pull`.** Instead of copying, symlink the folders so pulling
+new changes updates your installed skill (works for the home-directory agents). From inside the
+cloned repo:
+
+```bash
+ln -s "$(pwd)/feature-cycle"        ~/.claude/skills/feature-cycle
+ln -s "$(pwd)/feature-boilerplate"  ~/.claude/skills/feature-boilerplate
 ```
 
 ## Set up a project
