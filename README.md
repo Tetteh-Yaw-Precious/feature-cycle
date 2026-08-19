@@ -8,28 +8,95 @@
 > and signed off, instead of a half-painted room nobody comes back to — this is that, for building
 > software.
 
-The rest of this page is written for the developers who'll install it.
+The rest of this page explains what it is and exactly how it works, then how to install it. You
+don't need to already know the tools to follow along.
 
----
+## What am I looking at?
 
-A repeatable process for shipping a feature, packaged as an [Agent Skill](https://agentskills.io)
-for AI coding agents (Claude Code, Codex, Gemini CLI). A "skill" is a set of instructions your
-agent loads on its own when the work matches — you don't run a command, you just work normally and
-the agent follows the process.
+This is a **skill for AI coding agents**, the tools like Claude Code, Codex, and Gemini CLI that
+write code alongside you. A skill is just a set of written instructions the agent reads and follows.
+You don't run it like an app or type a command for it. You install it once, then work the way you
+normally would, and when you start building a new feature the agent notices and quietly follows the
+process described here.
 
-**What it's for:** on real projects, the expensive failures aren't bad planning — they're work that
-goes invisible. Finished but never committed. Merged but never announced. Broken in a branch nobody
-ran. This skill is the loop that stops that: talk it out → question it → audit what already exists →
-track it on your issue tracker → build in isolation → verify against a proven baseline → prove it
-runs → document what's true → close the loop.
+The process has a name: the **feature cycle**. It is a start-to-finish routine for building one
+feature and making sure it actually ships. Thought through, built, tested, saved, and handed off,
+instead of getting lost halfway.
 
-**How you use it:** once installed, just start feature work the way you already do — "let's build
-X", paste a meeting note, or "what's next." Your agent recognizes it and walks the loop, asking you
-questions along the way. There's no command to memorize.
+## The problem it fixes
 
-**How it stays portable:** the skill carries the loop and the discipline; every project-specific
-fact (stakeholder, repos, base branch, seed accounts, database, dev ports, test tooling) lives in a
-small per-project **profile** you fill in once. Same loop, any project.
+Most software doesn't fail because someone planned it badly. It fails in quieter ways:
+
+- The work gets finished but never saved, so it vanishes the next time the code is reset.
+- It gets merged into the main project but nobody is told, so the person who asked for it thinks it
+  was never done.
+- It sits in a side copy that looks finished but was never actually run, so it's broken and no one
+  notices until the demo.
+
+These failures are boring, and they are expensive. The feature cycle is built to make each one hard
+to skip past.
+
+## How it works
+
+Once installed, you don't call it. You start feature work the way you already talk: "let's build a
+booking screen", "here's what the client asked for", or you paste in notes from a meeting. The agent
+recognizes that as the start of a feature and walks these steps with you, asking questions as it
+goes:
+
+1. **Clean up loose ends first.** Before anything new, it checks for work from last time that was
+   finished but never saved or announced, and closes it out. This is where lost work gets caught.
+2. **Get the idea out of your head.** You describe the feature in plain words, the messy version,
+   edge cases and all. The agent listens without reshaping it.
+3. **Question it.** It asks the things that actually change what gets built: who is this for, what
+   happens when something goes wrong, does it need to work on mobile, does it touch money or personal
+   data.
+4. **Check it doesn't already exist.** Before writing a single line, it searches the project's
+   history and code to see if the feature, or part of it, is already built. This step alone often
+   turns a "big build" into a small one.
+5. **Write it down as a task.** Every piece of work gets an issue on your tracker (GitHub or
+   similar), described in plain language. Big features get broken into a proper plan first. That is
+   the job of the bundled `feature-boilerplate` skill.
+6. **Build it in a safe copy.** The work happens in an isolated branch so your main code is never
+   touched until it's ready.
+7. **Check it honestly.** It runs the type-checks and tests, and for anything users will see it
+   actually opens the app in a browser to confirm the feature works, rather than trusting a green
+   checkmark.
+8. **Review its own work.** It re-reads everything it just wrote, looking for its own mistakes, then
+   runs a proper code review.
+9. **Prove it runs.** For anything you'll show someone, it stands the feature up with real data and
+   confirms it works from end to end, so a demo never opens to a blank screen.
+10. **Write down what's true.** For features worth explaining, it produces a short document, often
+    with diagrams, describing how the thing actually works. Every claim is checked against the real
+    code, not guessed.
+11. **Close the loop.** It saves everything, opens the work for review, and writes a short "here is
+    what shipped" note in plain language for whoever asked.
+
+In a hurry? There's a built-in short version: clean up loose ends, check it doesn't already exist,
+build it, and say what shipped. Four steps instead of eleven.
+
+## How it fits any project
+
+Every project is different: different people, code, databases, and test setups. Instead of baking
+those details into the skill, the skill keeps them in a small separate file called a **profile**.
+You fill it in once per project. Who to report to, which code repositories, how to run the tests,
+where the database lives, and so on. The steps above stay the same everywhere; the profile is the
+part that changes. This repo includes a blank template and a filled-in example to copy from.
+
+## What a session looks like
+
+> **You:** let's build a way for owners to mark a job complete
+>
+> **Agent:** First, let me check nothing from last session is unsaved. Clean. Now, who marks it
+> complete, only the owner or staff too? And what should the worker see when it happens?
+>
+> **You:** just the owner. the worker gets a notification.
+>
+> **Agent:** Got it. Before I build, let me search the project. There's already a `job_status` field
+> and a notification helper. This is smaller than it looks, so I'll wire those together instead of
+> building new. Here's the task I'll track…
+
+That back-and-forth is the whole point. It isn't a wizard you click through. It's the agent working
+the way a careful teammate would.
 
 ## Requirements
 
