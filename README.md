@@ -1,14 +1,30 @@
 # feature-cycle-generic
 
-A portable [Agent Skill](https://agentskills.io) for building a feature end to end without
-letting the work go invisible: talk it out → question it → audit what already exists → track it
-→ build in isolation → verify against a proven baseline → prove it runs → document what is true →
-close the loop.
+A repeatable process for shipping a feature, packaged as an [Agent Skill](https://agentskills.io)
+for AI coding agents (Claude Code, Codex, Gemini CLI). A "skill" is a set of instructions your
+agent loads on its own when the work matches — you don't run a command, you just work normally and
+the agent follows the process.
 
-The skill carries the **loop and the discipline**; every project-specific fact (stakeholder,
-repos, base branch, seed accounts, database, dev ports, verification tooling) lives in a small
-per-project **profile** the skill reads at startup. Fill the profile once per project and the same
-battle-tested loop runs correctly everywhere.
+**What it's for:** on real projects, the expensive failures aren't bad planning — they're work that
+goes invisible. Finished but never committed. Merged but never announced. Broken in a branch nobody
+ran. This skill is the loop that stops that: talk it out → question it → audit what already exists →
+track it on your issue tracker → build in isolation → verify against a proven baseline → prove it
+runs → document what's true → close the loop.
+
+**How you use it:** once installed, just start feature work the way you already do — "let's build
+X", paste a meeting note, or "what's next." Your agent recognizes it and walks the loop, asking you
+questions along the way. There's no command to memorize.
+
+**How it stays portable:** the skill carries the loop and the discipline; every project-specific
+fact (stakeholder, repos, base branch, seed accounts, database, dev ports, test tooling) lives in a
+small per-project **profile** you fill in once. Same loop, any project.
+
+## Requirements
+
+- An AI coding agent that supports skills (Claude Code, Codex, or Gemini CLI).
+- `git` on your machine.
+- The [`gh`](https://cli.github.com) GitHub CLI, if you want the issue-tracking steps to run against
+  GitHub. Any other tracker works too — you just note it in your profile.
 
 ## Install
 
@@ -26,6 +42,7 @@ Or clone and symlink so you can `git pull` updates:
 
 ```bash
 git clone https://github.com/Tetteh-Yaw-Precious/feature-cycle-generic.git
+# the repo folder contains a skill folder of the same name — the doubled path is correct
 ln -s "$(pwd)/feature-cycle-generic/feature-cycle-generic" ~/.claude/skills/feature-cycle-generic
 ```
 
