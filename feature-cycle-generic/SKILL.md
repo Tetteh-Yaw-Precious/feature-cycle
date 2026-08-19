@@ -120,7 +120,7 @@ Report the verdicts before proposing work. On a real backlog this step routinely
 Every item gets an issue on **[profile: issue tracker]**. Scale only the ceremony:
 
 - **Small or medium** — one issue, written straight from step 2, in the user's language rather than implementation terms. No epic.
-- **Large** — needs a migration, or spans multiple repos, or is more than a couple of days: invoke **`feature-boilerplate`** for the full milestone → epic → user-story treatment.
+- **Large** — needs a migration, or spans multiple repos, or is more than a couple of days: if the **`feature-boilerplate`** skill is installed, invoke it for the full milestone → epic → user-story treatment. If not, do it by hand: open a milestone, an epic issue, and one user-story issue per slice.
 
 The size trigger is concrete: **does it need a migration, or more than one repo?** If no to both, one issue is enough.
 
@@ -205,7 +205,7 @@ State what you verified and what you did not. "Type-checks clean" and "I ran it"
 
 Before showing anything, re-read the diff looking for what you got wrong — not what you wrote. This reliably finds things: a missing import, an N+1 from a serializer field, a state you did not consider.
 
-Then invoke **`code-review`** for the real pass.
+Then, if the **`code-review`** skill is installed, invoke it for the real pass. If not, do a deliberate review pass yourself: read the whole diff once more against the requirements, checking edge cases, error paths, and anything that touches money, contracts, or personal data.
 
 ## 9. Prove it runs
 
@@ -233,7 +233,7 @@ For a feature worth explaining to the stakeholder, produce the architecture doc:
 - Colour-code by **real ship state** — live / in a branch / not built — derived from git, never memory.
 - Include a plain-language section on what is **not** built.
 
-Use **`mermaid`** for syntax, **`artifact-diagramming`** for whether a picture earns its place. A stale doc is worse than none. Regenerate before each stakeholder meeting.
+If the **`mermaid`** and **`artifact-diagramming`** skills are installed, use them — `mermaid` for diagram syntax, `artifact-diagramming` for whether a picture earns its place. If not, write the diagrams in plain Mermaid yourself and cut any that do not answer a real question. A stale doc is worse than none. Regenerate before each stakeholder meeting.
 
 ## 11. Close it — or let step 0 catch it
 
