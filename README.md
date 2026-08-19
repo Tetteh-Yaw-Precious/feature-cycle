@@ -41,6 +41,9 @@ cp feature-cycle-generic/profile-template.md .claude/feature-cycle-profile.md
 The skill looks for `.claude/feature-cycle-profile.md` in the repo you're working in. If a field
 is blank it asks rather than guessing.
 
+See `feature-cycle-generic/profiles/example.md` for a fully filled-in profile (a fictional
+project) so you know what each field should look like.
+
 ## Companion skills (optional)
 
 The loop hands off to a few other skills when present — `feature-boilerplate` (epic + issues),

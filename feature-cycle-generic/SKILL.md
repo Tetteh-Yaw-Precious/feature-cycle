@@ -1,7 +1,7 @@
 ---
 name: feature-cycle-generic
 description: |
-  The portable end-to-end loop for building a feature on any project: talk it out → question it → audit what already exists → track it on the issue tracker → build in isolation → verify against a proven baseline → prove it runs → document what is true → close the loop. Triggers whenever the user starts new feature work on a project that is NOT WIA — "let's build X", "start on this feature", "here's what the client asked for", "work through the meeting actionables", "what's next", pastes a meeting transcript, or asks to pick up where the last cycle ended. Reads a per-project profile for the concrete facts (stakeholder, repos, seed accounts, DB, ports, branch base). If a project-specific feature-cycle skill exists for this repo, prefer it. Calls feature-boilerplate, mermaid, artifact-diagramming and code-review rather than repeating them.
+  The portable end-to-end loop for building a feature on any project: talk it out → question it → audit what already exists → track it on the issue tracker → build in isolation → verify against a proven baseline → prove it runs → document what is true → close the loop. Triggers whenever the user starts new feature work — "let's build X", "start on this feature", "here's what the client asked for", "work through the meeting actionables", "what's next", pastes a meeting transcript, or asks to pick up where the last cycle ended. Reads a per-project profile for the concrete facts (stakeholder, repos, seed accounts, DB, ports, branch base). If a project-specific feature-cycle skill already exists for this repo, prefer it. Optionally calls the feature-boilerplate, mermaid, artifact-diagramming and code-review skills if they are installed, rather than repeating them.
 ---
 
 # Feature Cycle (portable)
@@ -10,7 +10,7 @@ The loop for building a feature and never letting it go invisible. Each pass end
 
 This skill exists because the expensive failures on real projects are not scoping failures. Work gets built and then disappears — finished but uncommitted, merged but never announced, broken in a branch nobody ran. Step 0 and step 3 are the ones that fix that. Everything else is chaining tools that already exist.
 
-**This is the WIA `feature-cycle` skill with the project-specific facts pulled out into a profile.** If you are on WIA, use the WIA `feature-cycle` skill directly — it is already filled in.
+The skill carries the loop and the discipline; every project-specific fact lives in a per-project **profile** (see step 0a). Fill the profile in once for your project and the same loop runs correctly there.
 
 ## 0a. Load the project profile — do this before anything else
 
@@ -22,7 +22,7 @@ Every concrete fact this skill needs — who the stakeholder is, the repos, the 
 2. A profile the user names or pastes.
 3. None yet? Copy `profile-template.md` (next to this SKILL.md), fill it in *with the user*, and write it to `.claude/feature-cycle-profile.md`. Do not guess the values — a wrong seed account or base branch is worse than asking.
 
-Everywhere below that says **[profile: X]**, read X from the loaded profile. If the profile is silent on something, ask; do not fall back to a WIA default.
+Everywhere below that says **[profile: X]**, read X from the loaded profile. If the profile is silent on something, ask; do not fall back to a default carried over from another project.
 
 ## The fast path
 
