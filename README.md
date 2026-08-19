@@ -13,7 +13,7 @@ don't need to already know the tools to follow along.
 
 ## What am I looking at?
 
-This is a **skill for AI coding agents**, the tools like Claude Code, Codex, and Gemini CLI that
+This is a **skill for AI coding agents** like Claude Code, Codex, and Gemini CLI, the tools that
 write code alongside you. A skill is just a set of written instructions the agent reads and follows.
 You don't run it like an app or type a command for it. You install it once, then work the way you
 normally would, and when you start building a new feature the agent notices and quietly follows the
