@@ -1,5 +1,17 @@
 # feature-cycle-generic
 
+> **In plain terms:** When someone builds a new piece of software with help from an AI assistant,
+> the work often slips through the cracks — it gets finished but never saved, done but never shared,
+> or left half-broken and forgotten. This is a checklist the AI follows so that doesn't happen. It
+> makes sure every piece of work gets thought through, actually finished, saved, tested, and handed
+> off before moving on. Think of the routine a good contractor follows so a renovation gets finished
+> and signed off, instead of a half-painted room nobody comes back to — this is that, for building
+> software.
+
+The rest of this page is written for the developers who'll install it.
+
+---
+
 A repeatable process for shipping a feature, packaged as an [Agent Skill](https://agentskills.io)
 for AI coding agents (Claude Code, Codex, Gemini CLI). A "skill" is a set of instructions your
 agent loads on its own when the work matches — you don't run a command, you just work normally and
