@@ -1,11 +1,11 @@
 # feature-cycle
 
 > **In plain terms:** When someone builds a new piece of software with help from an AI assistant,
-> the work often slips through the cracks — it gets finished but never saved, done but never shared,
+> the work often slips through the cracks. It gets finished but never saved, done but never shared,
 > or left half-broken and forgotten. This is a checklist the AI follows so that doesn't happen. It
 > makes sure every piece of work gets thought through, actually finished, saved, tested, and handed
 > off before moving on. Think of the routine a good contractor follows so a renovation gets finished
-> and signed off, instead of a half-painted room nobody comes back to — this is that, for building
+> and signed off, instead of a half-painted room nobody comes back to. This is that, for building
 > software.
 
 The rest of this page explains what it is and exactly how it works, then how to install it. You
@@ -14,10 +14,10 @@ don't need to already know the tools to follow along.
 ## What am I looking at?
 
 This is a **skill for AI coding agents** like Claude Code, Cursor, Codex, and Gemini CLI, the tools
-that write code alongside you. A skill is just a set of written instructions the agent reads and follows.
-You don't run it like an app or type a command for it. You install it once, then work the way you
-normally would, and when you start building a new feature the agent notices and quietly follows the
-process described here.
+that write code alongside you. A skill is just a set of written instructions the agent reads and
+follows. You don't run it like an app or type a command for it. You install it once, then work the
+way you normally would, and when you start building a new feature the agent notices and quietly
+follows the process described here.
 
 The process has a name: the **feature cycle**. It is a start-to-finish routine for building one
 feature and making sure it actually ships. Thought through, built, tested, saved, and handed off,
@@ -54,8 +54,8 @@ goes:
    history and code to see if the feature, or part of it, is already built. This step alone often
    turns a "big build" into a small one.
 5. **Write it down as a task.** Every piece of work gets an issue on your tracker (GitHub or
-   similar), described in plain language. Big features get broken into a proper plan first. That is
-   the job of the bundled `feature-boilerplate` skill.
+   similar), described in plain language. Big features get broken into a proper plan first, which is
+   the job of the companion `feature-boilerplate` skill.
 6. **Build it in a safe copy.** The work happens in an isolated branch so your main code is never
    touched until it's ready.
 7. **Check it honestly.** It runs the type-checks and tests, and for anything users will see it
@@ -73,6 +73,18 @@ goes:
 
 In a hurry? There's a built-in short version: clean up loose ends, check it doesn't already exist,
 build it, and say what shipped. Four steps instead of eleven.
+
+## It talks to you while it works
+
+This is the part most AI coding sessions get wrong, so the skill is strict about it. The failure is
+specific: the agent checks what already exists, you say "go", and then an hour disappears with no
+word while branches and changes pile up. You cannot redirect what you cannot see, and by the time
+you ask what's happening, the expensive decisions are already made.
+
+So there are three moments where the agent stops and talks to you, every time: after it has checked
+what already exists, after each finished piece of work, and whenever a decision has more than one
+reasonable answer. Working ahead quietly is fine once a decision is made. It is never fine for the
+decision itself.
 
 ## How it fits any project
 
@@ -105,31 +117,19 @@ the way a careful teammate would.
   skill works in any of them.
 - `git` on your machine.
 - The [`gh`](https://cli.github.com) GitHub CLI, if you want the issue-tracking steps to run against
-  GitHub. Any other tracker works too — you just note it in your profile.
+  GitHub. Any other tracker works too, you just note it in your profile.
 
 ## What's in this repo
 
-Two skills that work together:
-
-- **`feature-cycle`** — the main loop. This is the one that drives everything.
-- **`feature-boilerplate`** — scopes a large feature into a GitHub epic + user-story issues. The
-  `feature-cycle` loop hands off to it at step 4 for big work. Install both; they ship together.
+- **`SKILL.md`** is the loop itself, the instructions your agent reads.
+- **`profile-template.md`** is the blank form you fill in once per project.
+- **`profiles/example.md`** is a completed profile for a made-up product, so you can see what a good
+  answer to each field looks like.
 
 ## Install
 
-Every agent reads the same `SKILL.md` format; only the folder it looks in differs. So the steps are
-the same everywhere: get the two skill folders, then drop them in the right place for your agent.
-
-**Step 1 — get the files.** Clone the repo (or download it as a ZIP and unzip):
-
-```bash
-git clone https://github.com/Tetteh-Yaw-Precious/feature-cycle.git
-cd feature-cycle
-```
-
-Inside are the two skill folders you'll install: `feature-cycle` and `feature-boilerplate`.
-
-**Step 2 — copy them where your agent looks.** Find your agent in the table:
+Every agent reads the same `SKILL.md` format; only the folder it looks in differs. Find your agent
+in the table, then run the matching clone:
 
 | Agent | Where skills live |
 |-------|-------------------|
@@ -137,79 +137,55 @@ Inside are the two skill folders you'll install: `feature-cycle` and `feature-bo
 | Codex | `~/.agents/skills/` |
 | Gemini CLI | `~/.agents/skills/` |
 | GitHub Copilot CLI | `~/.agents/skills/` |
-| Cursor (2.4+) | `.cursor/skills/` **inside the project** you want to use them in |
-
-For every agent except Cursor, the folder lives in your home directory and works across all your
-projects. Run this from inside the cloned repo, changing `DEST` to match your agent:
+| Cursor (2.4+) | `.cursor/skills/` **inside the project** you want to use it in |
 
 ```bash
-DEST=~/.claude/skills      # Claude Code
-# DEST=~/.agents/skills    # Codex, Gemini CLI, or Copilot CLI
+# Claude Code
+git clone https://github.com/Tetteh-Yaw-Precious/feature-cycle.git \
+  ~/.claude/skills/feature-cycle
 
-mkdir -p "$DEST"
-cp -R feature-cycle feature-boilerplate "$DEST"/
-```
+# Codex, Gemini CLI, or Copilot CLI
+git clone https://github.com/Tetteh-Yaw-Precious/feature-cycle.git \
+  ~/.agents/skills/feature-cycle
 
-For **Cursor**, skills are per-project, so copy them into the project you're working in. From the
-cloned repo, point at that project:
-
-```bash
-PROJECT=~/code/my-project          # the project you want the skill in
-mkdir -p "$PROJECT/.cursor/skills"
-cp -R feature-cycle feature-boilerplate "$PROJECT/.cursor/skills/"
+# Cursor, from inside the project you want it in
+git clone https://github.com/Tetteh-Yaw-Precious/feature-cycle.git \
+  .cursor/skills/feature-cycle
 ```
 
 That's it. Your agent will pick the skill up automatically the next time you start feature work.
-
-**Optional — stay up to date with `git pull`.** Instead of copying, symlink the folders so pulling
-new changes updates your installed skill (works for the home-directory agents). From inside the
-cloned repo:
-
-```bash
-ln -s "$(pwd)/feature-cycle"        ~/.claude/skills/feature-cycle
-ln -s "$(pwd)/feature-boilerplate"  ~/.claude/skills/feature-boilerplate
-```
+Because it's a clone rather than a copy, `git pull` inside that folder gets you later changes.
 
 ## Set up a project
 
-The first time you run the skill in a repo, it will prompt you to create a profile. Do it by hand:
+The first time you run the skill in a repo it will offer to create a profile with you. To do it by
+hand instead:
 
 ```bash
-cp feature-cycle/profile-template.md .claude/feature-cycle-profile.md
+cp ~/.claude/skills/feature-cycle/profile-template.md .claude/feature-cycle-profile.md
 # then fill in every field with your project's facts
 ```
 
-The skill looks for `.claude/feature-cycle-profile.md` in the repo you're working in. If a field
-is blank it asks rather than guessing.
+The skill looks for `.claude/feature-cycle-profile.md` in the repo you're working in. If a field is
+blank it asks rather than guessing, because a wrong database or branch name is worse than no answer
+at all.
 
-See `feature-cycle/profiles/example.md` for a fully filled-in profile (a fictional project) so you
-know what each field should look like.
+See `profiles/example.md` for a fully filled-in profile so you know what each field should look
+like.
 
 ## Companion skills
 
-### Bundled — installs with this repo
+The loop hands work to these rather than repeating them. Each one is optional. If you don't have it
+installed, the loop does a reasonable version of that step itself and carries on.
 
-- **[`feature-boilerplate`](feature-boilerplate/SKILL.md)** — used at **step 4** to turn a large
-  feature (one that needs a migration, or spans multiple repos) into a tracked milestone → epic →
-  user-story issues written in plain, user-facing language. It's included in this repo, so if you
-  installed both folders above there's nothing extra to do. For small or medium work the loop just
-  opens a single issue and never calls it.
-
-### Optional — external, not included
-
-At three other steps the loop can hand work to a skill you may already have. If you don't, it does
-that step itself with a built-in fallback, so nothing breaks — you don't need any of these to start.
-
-| Skill | What it is | Which step uses it | If you don't have it |
-|-------|-----------|--------------------|----------------------|
-| `code-review` | A structured code-review pass over your diff. [Claude Code ships one](https://docs.claude.com/en/docs/claude-code) as `/code-review`; other agents have their own. | **Step 8 (Review)** — after you've re-read your own diff. | The loop does a deliberate manual review pass instead. |
-| `mermaid` | Helper for writing correct [Mermaid](https://mermaid.js.org) diagram syntax. | **Step 10 (Document)** — when producing the architecture doc. | The loop writes the Mermaid diagrams itself. |
-| `artifact-diagramming` | Judgment on whether a given diagram earns its place. A personal skill, no public home. | **Step 10 (Document)** — deciding which diagrams to keep. | The loop cuts any diagram that doesn't answer a real question, using its own judgment. |
-
-So the loop runs fully standalone. The bundled `feature-boilerplate` covers the one heavy step;
-the three optional skills just let it delegate those moments to a purpose-built skill instead of
-handling them inline.
+| Skill | When the loop uses it |
+|---|---|
+| [`feature-boilerplate`](https://github.com/Tetteh-Yaw-Precious/feature-boilerplate) | Step 5, for a feature big enough to need a real plan. Turns a rough idea into a tracked milestone, an epic, and user-story issues written in plain language. |
+| [`vertical-slice-matrix`](https://github.com/Tetteh-Yaw-Precious/vertical-slice-matrix) | Steps 4 and 6, before writing any small reusable piece of code, and before adding a value to a fixed list like order statuses or payment methods. Searching the project's history tells you whether a *feature* exists. It cannot tell you that the same helper has already been written five times. |
+| [`lifecycle-feature`](https://github.com/Tetteh-Yaw-Precious/lifecycle-feature) | Step 6, when the thing being built is shared between two people who both act on it, like an invitation or an approval. |
+| [`architecture-guardrails`](https://github.com/Tetteh-Yaw-Precious/architecture-guardrails) | Step 8, when a bug keeps coming back and deserves an automatic check instead of a rule somebody has to remember. |
+| [`feature-docs`](https://github.com/Tetteh-Yaw-Precious/feature-docs) | Steps 2 and 10, when the feature needs a written specification before building or a real document after. |
 
 ## License
 
-MIT
+MIT.

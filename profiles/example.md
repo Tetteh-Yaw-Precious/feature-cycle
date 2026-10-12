@@ -1,7 +1,7 @@
-# Feature-cycle profile — EXAMPLE (fictional)
+# Feature-cycle profile: EXAMPLE (fictional)
 
 A filled-in example so you can see what a real profile looks like. This describes a made-up
-SaaS project called **Acme** — replace every value with your own. To set up your project,
+SaaS project called **Acme**. Replace every value with your own. To set up your project,
 copy `../profile-template.md` to `.claude/feature-cycle-profile.md` in your repo, not this file.
 
 ---
@@ -15,8 +15,8 @@ copy `../profile-template.md` to `.claude/feature-cycle-profile.md` in your repo
 - **Command or URL:** `gh` CLI on `acme-co/acme-app`.
 
 ## Repos
-- **acme-co/acme-web** — React frontend (Vite).
-- **acme-co/acme-api** — Node/Express backend, Postgres.
+- **acme-co/acme-web**: React frontend (Vite).
+- **acme-co/acme-api**: Node/Express backend, Postgres.
 
 ## Base branch per repo
 - **acme-web:** `develop`
@@ -25,7 +25,7 @@ copy `../profile-template.md` to `.claude/feature-cycle-profile.md` in your repo
 
 ## Branch conventions
 - **Prefixes in use:** `feat/`, `fix/`, `chore/`, `docs/`.
-- **Naming rule:** lead with the issue number, name for the outcome — `feat/214-export-invoices`.
+- **Naming rule:** lead with the issue number, name for the outcome: `feat/214-export-invoices`.
 
 ## Worktrees
 - **Worktree dir:** `.worktrees/` (add it to `.gitignore`).
@@ -34,7 +34,7 @@ copy `../profile-template.md` to `.claude/feature-cycle-profile.md` in your repo
 
 ## Personas & role gotchas
 - **Roles:** admin, member, viewer.
-- **Gotchas:** a "workspace owner" is an admin with billing rights — check which is meant before gating a feature on it.
+- **Gotchas:** a "workspace owner" is an admin with billing rights, so check which is meant before gating a feature on it.
 
 ## Platform constraints
 - **Mobile:** responsive web required; no native app.
@@ -46,7 +46,7 @@ copy `../profile-template.md` to `.claude/feature-cycle-profile.md` in your repo
 - **Other house rules:** shared UI comes from `@acme/ui`; do not hand-roll components that already exist there.
 
 ## Verification stack
-- **Repo green?** Yes — `npm run typecheck` and `npm test` exit clean; trust the exit code.
+- **Repo green?** Yes, `npm run typecheck` and `npm test` exit clean; trust the exit code.
 - **Test baseline:** no known pre-existing failures.
 - **DB clone command:** `createdb acme_demo --template acme_dev`.
 - **Dev ports:** web `5173`, api `3000`, Postgres `5432`.
